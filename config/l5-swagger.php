@@ -23,7 +23,7 @@ return [
                 /*
                  * File name of the generated json documentation file
                 */
-                'docs_json' => 'swagger-docs/api-docs.json',
+                'docs_json' => 'api-docs.json',
 
                 /*
                  * File name of the generated YAML documentation file
@@ -39,7 +39,8 @@ return [
                  * Absolute paths to directory containing the swagger annotations are stored.
                 */
                 'annotations' => [
-                    base_path('app'),
+                    base_path('app/Http/Controllers'),
+                    base_path('app/Models'),
                 ],
 
             ],
@@ -50,7 +51,7 @@ return [
             /*
              * Route for accessing parsed swagger annotations.
             */
-            'docs' => 'docs',
+            'docs' => '',
 
             /*
              * Route for Oauth2 authentication callback.
