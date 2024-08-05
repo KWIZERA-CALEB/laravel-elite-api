@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Certificates;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
@@ -16,4 +17,8 @@ class Course extends Model
         'price',
         'category',
     ];
+
+    public function certificates () {
+        return $this->hasMany(Certificates::class);
+    }
 }
