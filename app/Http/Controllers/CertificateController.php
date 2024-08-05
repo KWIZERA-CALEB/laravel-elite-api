@@ -12,8 +12,9 @@ class CertificateController extends Controller
     //after completing a course call this api to save the certificate
     public function addCertificate (Request $request, $id) {
         // temporarly data
-        //$student = auth()->user();
-        $student_id = 1;
+        //$student_id = 1;
+
+        $student = auth()->user();
         $course = Course::find($id);
 
 
@@ -21,7 +22,7 @@ class CertificateController extends Controller
 
         $certificate = Certificates::create([
             'course_id'=>$course->id,
-            'student_id'=>$student_id,
+            'student_id'=>$student->id,
             'cert_code'=>$certificateCode,
         ]);
 
@@ -52,10 +53,10 @@ class CertificateController extends Controller
     //django gets this data to generate the certificate when a user claims the certificate
     public function singleCertificate(Request $request, $id) {
         //temporally data
-        $student_id = 1;
+        $auth_student = auth()->user();
 
 
-        $student = User::find($student_id);
+        $student = User::find($auth_student->id);
         $course = Course::find($id);
 
         $data = [
@@ -68,9 +69,9 @@ class CertificateController extends Controller
     }
 
     public function allUserCertificates() {
-        $student_id = 1;
+        $student = auth()->user();
 
-        $certificates = Certificates::where('student_id', $student_id)
+        $certificates = Certificates::where('student_id', $student->id)
                                     ->get();
         $data = [
             'status'=>200,
