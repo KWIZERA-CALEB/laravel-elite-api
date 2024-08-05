@@ -151,16 +151,19 @@ class AuthController extends Controller
                 return response()->json($data, 401);
             }
 
-            // Retrieve the user
+            // Retrieve the user and login user
+            /** @var \App\Models\User $user **/
             $user = auth()->user();
+
+            /** @var \App\Models\User $user **/
             //$user = Auth::user(); 
 
             //Generate a token
-            //$token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
 
             $data = [
                 'status'=>200,
-                //'token'=>$token,
+                'token'=>$token,
                 'user'=>$user,
                 'message'=>'You are loggedIn'
             ];

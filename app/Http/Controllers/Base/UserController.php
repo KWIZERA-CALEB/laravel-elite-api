@@ -22,4 +22,29 @@ class UserController extends Controller
         return response()->json($data, 200);
 
     }
+
+    //user profile
+    public function userProfile(Request $request, $id) {
+        $user = User::find($id);
+
+        $data = [
+            'status'=>200,
+            'user'=>$user,
+        ];
+
+        return response()->json($data, 200);
+
+    }
+
+    //Profile
+    public function loginedUser() {
+        $user = auth()->user();
+
+        $data = [
+            'status'=>200,
+            'user'=>$user,
+        ];
+
+        return response()->json($data, 200);
+    }
 }

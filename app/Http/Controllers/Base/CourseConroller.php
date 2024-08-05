@@ -31,6 +31,14 @@ class CourseConroller extends Controller
             ];
             return response()->json($data, 422);
         }else {
+            //Get loggined user
+            //$user = auth()->user();
+
+            //temporarly user
+            //$user = 4;
+
+            $user = auth()->user();
+
             // Add Course
             Course::create([
                 'title'=>$request->title,
@@ -38,6 +46,8 @@ class CourseConroller extends Controller
                 'description'=>$request->description,
                 'price'=>$request->price,
                 'category'=>$request->category,
+                'user_id'=>$user->id,
+                //'user_id'=>$user,
             ]);
 
             $data = [
@@ -46,6 +56,21 @@ class CourseConroller extends Controller
             ];
             return response()->json($data, 201);
         }
+    }
+
+    //Return courses for a specific teacher
+    public function allTeacherCourses() {
+        $teacher = auth()->user();
+
+        $courses = Course::where('user_id', $teacher->id)
+                            ->get();
+
+        $data = [
+            'status'=>200,
+            'courses'=>$courses,
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function allCourses() {

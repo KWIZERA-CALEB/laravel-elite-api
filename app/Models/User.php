@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Course;
 use App\Models\Certificates;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -52,7 +53,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -94,5 +95,9 @@ class User extends Authenticatable
 
     public function certificates () {
         return $this->hasMany(Certificates::class);
+    }
+
+    public function courses () {
+        return $this->hasMany(Course::class);
     }
 }
