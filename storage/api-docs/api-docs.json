@@ -9,6 +9,57 @@
             "post": {
                 "description": "Register User",
                 "operationId": "ca7c0cb6772de9bffbb8c896980cebc8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "age",
+                                    "profile",
+                                    "role",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "example"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "pass123"
+                                    },
+                                    "age": {
+                                        "type": "string",
+                                        "example": "10"
+                                    },
+                                    "profile": {
+                                        "type": "string",
+                                        "example": "profile.png"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "Student"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "0798205731"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "User registered",
@@ -26,10 +77,10 @@
                 }
             }
         },
-        "api/login": {
+        "/api/login": {
             "post": {
                 "description": "Login User",
-                "operationId": "7128d88221be30b754428a5db2880cd0",
+                "operationId": "c373bc4cffa4a56fc64e3979b8ee7b96",
                 "responses": {
                     "200": {
                         "description": "User loggined",

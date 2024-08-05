@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,20 @@ class AuthController extends Controller
      * @OA\Post(
      *      path="/api/register",
      *      description="Register User",
+     *      @OA\RequestBody(
+     *          required=true,
+     *               @OA\JsonContent(
+     *               required={"name", "email", "password", "age",
+     *              "profile", "role", "phone"},
+     *               @OA\Property(property="name", type="string", example="example"),
+     *               @OA\Property(property="email", type="string", format="email", example="example@gmail.com"),
+     *               @OA\Property(property="password", type="string", format="password", example="pass123"),
+     *               @OA\Property(property="age", type="string", example="10"),
+     *               @OA\Property(property="profile", type="string", example="profile.png"),
+     *               @OA\Property(property="role", type="string", example="Student"),
+     *               @OA\Property(property="phone", type="string", example="0798205731"),
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=201,
      *          description="User registered",
@@ -77,13 +92,13 @@ class AuthController extends Controller
                 'password'=>Hash::make($request->password),
                 'profile'=>$request->profile,
                 'role'=>$request->role,
-                'verification_code'=>$verificationCode,
-                'is_verified'=>false,
+                //'verification_code'=>$verificationCode,
+                //'is_verified'=>false,
                 'phone'=>$request->phone,
             ]);
 
             //send email
-            Mail::to($user->email)->send(new VerificationMail($user, $verificationCode));
+            //Mail::to($user->email)->send(new VerificationMail($user, $verificationCode));
 
             $data = [
                 'status'=>201,
@@ -138,13 +153,14 @@ class AuthController extends Controller
 
             // Retrieve the user
             $user = auth()->user();
+            //$user = Auth::user(); 
 
             //Generate a token
-            $token = $user->createToken('auth_token')->plainTextToken;
+            //$token = $user->createToken('auth_token')->plainTextToken;
 
             $data = [
                 'status'=>200,
-                'token'=>$token,
+                //'token'=>$token,
                 'user'=>$user,
                 'message'=>'You are loggedIn'
             ];
@@ -179,7 +195,7 @@ class AuthController extends Controller
                 return response()->json($data, 422);
             }else {
                 $user->password = Hash::make($request->input('new_password'));
-                $user->save();
+                //$user->save();
 
                 $data = [
                     'status'=>200,
