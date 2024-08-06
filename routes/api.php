@@ -16,10 +16,11 @@ Route::get('/user', function (Request $request) {
 // Authentication Endpoints
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logOut'])->middleware('auth:sanctum');
 Route::post('/edit-pass', [AuthController::class, 'editPassword']);
 
 // Courses Endpoints
-Route::post('/add-course', [CourseConroller::class, 'addCourse'])->middleware('auth:sanctum');;
+Route::post('/add-course', [CourseConroller::class, 'addCourse'])->middleware('auth:sanctum');
 Route::get('/courses', [CourseConroller::class, 'allCourses']);
 Route::put('/edit-course/{id}', [CourseConroller::class, 'editCourse']);
 Route::get('/course/{id}', [CourseConroller::class, 'singleCourse']);
@@ -34,5 +35,5 @@ Route::get('/user/{id}', [UserController::class, 'userProfile']);
 
 // Certificates EndPoints
 Route::post('/add-certificate/{id}', [CertificateController::class, 'addCertificate'])->middleware('auth:sanctum');
-Route::get('/single-certificate/{id}', [CertificateController::class, 'singleCertificate']);
+Route::get('/single-certificate/{id}', [CertificateController::class, 'singleCertificate'])->middleware('auth:sanctum');
 Route::get('/student/certificates', [CertificateController::class, 'allUserCertificates'])->middleware('auth:sanctum');
