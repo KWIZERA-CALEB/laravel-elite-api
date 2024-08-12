@@ -17,21 +17,21 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logOut'])->middleware('auth:sanctum');
-Route::post('/edit-pass', [AuthController::class, 'editPassword']);
+Route::post('/edit-pass', [AuthController::class, 'editPassword'])->middleware('auth:sanctum');
 
 // Courses Endpoints
 Route::post('/add-course', [CourseConroller::class, 'addCourse'])->middleware('auth:sanctum');
 Route::get('/courses', [CourseConroller::class, 'allCourses']);
-Route::put('/edit-course/{id}', [CourseConroller::class, 'editCourse']);
+Route::put('/edit-course/{id}', [CourseConroller::class, 'editCourse'])->middleware('auth:sanctum');
 Route::get('/course/{id}', [CourseConroller::class, 'singleCourse']);
-Route::delete('/delete-course/{id}', [CourseConroller::class, 'deleteCourse']);
+Route::delete('/delete-course/{id}', [CourseConroller::class, 'deleteCourse'])->middleware('auth:sanctum');
 Route::get('/search', [CourseConroller::class, 'searchCourse']);
-Route::get('/teacher/courses', [CourseConroller::class, 'allTeacherCourses'])->middleware(['auth:sanctum', ExpireOldTokens::class]);
+Route::get('/teacher/courses', [CourseConroller::class, 'allTeacherCourses'])->middleware(['auth:sanctum']);
 
 // Users Endpoints
 Route::get('/teachers', [UserController::class, 'teachers']);
-Route::get('/user', [UserController::class, 'loginedUser'])->middleware(['auth:sanctum', ExpireOldTokens::class]);
-Route::get('/user/{id}', [UserController::class, 'userProfile']);
+Route::get('/user', [UserController::class, 'loginedUser'])->middleware(['auth:sanctum']);
+Route::get('/user/{id}', [UserController::class, 'userProfile'])->middleware('auth:sanctum');
 
 // Certificates EndPoints
 Route::post('/add-certificate/{id}', [CertificateController::class, 'addCertificate'])->middleware('auth:sanctum');
