@@ -143,7 +143,7 @@ class AuthController extends Controller
             ];
             return response()->json($data, 422);
         }else {
-            if(!auth()->attempt($request->only('email', 'password', $request->remember))) {
+            if(!Auth::attempt($request->only('email', 'password', $request->remember))) {
                 $data = [
                     'status'=>401,
                     'error'=>'Incorrect Credentials'
@@ -153,7 +153,7 @@ class AuthController extends Controller
 
             // Retrieve the user and login user
             /** @var \App\Models\User $user **/
-            $user = auth()->user();
+            $user = Auth::user();
 
             /** @var \App\Models\User $user **/
             //$user = Auth::user(); 
@@ -188,7 +188,7 @@ class AuthController extends Controller
             ];
             return response()->json($data, 422);
         }else {
-            $user = auth()->user();
+            $user = Auth::user();
             // check old password
             if(!Hash::check($request->input('old_password'), $user->password)) {
                 $data = [
