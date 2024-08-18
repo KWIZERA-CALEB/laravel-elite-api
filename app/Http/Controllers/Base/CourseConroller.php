@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Base;
 
-use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CourseConroller extends Controller
@@ -37,7 +38,7 @@ class CourseConroller extends Controller
             //temporarly user
             //$user = 4;
 
-            $user = auth()->user();
+            $user = Auth::user();
 
             // Add Course
             Course::create([
@@ -60,7 +61,7 @@ class CourseConroller extends Controller
 
     //Return courses for a specific teacher
     public function allTeacherCourses() {
-        $teacher = auth()->user();
+        $teacher = Auth::user();
 
         $courses = Course::where('user_id', $teacher->id)
                             ->get();
@@ -77,7 +78,7 @@ class CourseConroller extends Controller
         $courses = Course::all();
         $data = [
             'status'=>200,
-            'course'=>$courses,
+            'courses'=>$courses,
         ];
         return response()->json($data, 200);
     }

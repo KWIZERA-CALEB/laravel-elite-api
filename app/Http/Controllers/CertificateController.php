@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Certificates;
-use App\Models\Course;
 use App\Models\User;
+use App\Models\Course;
+use App\Models\Certificates;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CertificateController extends Controller
 {
     //after completing a course call this api to save the certificate
     public function addCertificate (Request $request, $id) {
-        $student = auth()->user();
+        $student = Auth::user();
         $course = Course::find($id);
 
 
@@ -38,7 +39,7 @@ class CertificateController extends Controller
 
     //django gets this data to generate the certificate when a user claims the certificate
     public function singleCertificate(Request $request, $id) {
-        $auth_student = auth()->user();
+        $auth_student = Auth::user();
 
 
         $student = User::find($auth_student->id);
@@ -54,7 +55,7 @@ class CertificateController extends Controller
     }
 
     public function allUserCertificates() {
-        $student = auth()->user();
+        $student = Auth::user();
 
         $certificates = Certificates::where('student_id', $student->id)
                                     ->get();
